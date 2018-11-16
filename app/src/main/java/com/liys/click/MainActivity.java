@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn2).setOnClickListener(this);
     }
 
+    //点击事件 连续点击处理
     @SingleClick
     @Override
     public void onClick(View v) {

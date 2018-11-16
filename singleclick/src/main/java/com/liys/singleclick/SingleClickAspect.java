@@ -12,7 +12,7 @@ public class SingleClickAspect {
     //拦截方法
     @Around("execution(@com.liys.singleclick.SingleClick  * *(..)) && @annotation(singleClick)")
     public void singleClick(ProceedingJoinPoint joinPoint, SingleClick singleClick) throws Throwable {
-
+        LogUtils.d("拦截方法");
         //1. 获取view
         View view = null;
         for (Object arg : joinPoint.getArgs()) {

@@ -2,9 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
-
-
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
@@ -37,56 +34,59 @@ dependencies {
 
 
 //>>>>>>>>>>>>>>>>>>>Aspectjrt 只在module下使用的配置>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-import org.aspectj.bridge.IMessage
-import org.aspectj.bridge.MessageHandler
-import org.aspectj.tools.ajc.Main
+apply from: 'aopLib.gradle'
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
 
-        classpath 'org.aspectj:aspectjtools:1.8.1'
-//        classpath 'org.aspectj:aspectjweaver:1.8.13'
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
-android.libraryVariants.all { variant ->
-    JavaCompile javaCompile = variant.javaCompile
-    javaCompile.doLast {
-        String[] args = ["-showWeaveInfo",
-                         "-1.5",
-                         "-inpath", javaCompile.destinationDir.toString(),
-                         "-aspectpath", javaCompile.classpath.asPath,
-                         "-d", javaCompile.destinationDir.toString(),
-                         "-classpath", javaCompile.classpath.asPath,
-                         "-bootclasspath", android.bootClasspath.join(
-                File.pathSeparator)]
-
-        MessageHandler handler = new MessageHandler(true)
-        new Main().run(args, handler)
-
-        def log = project.logger
-        for (IMessage message : handler.getMessages(null, true)) {
-            switch (message.getKind()) {
-                case IMessage.ABORT:
-                case IMessage.ERROR:
-                case IMessage.FAIL:
-                    log.error message.message, message.thrown
-                    break
-                case IMessage.WARNING:
-                case IMessage.INFO:
-                    log.info message.message, message.thrown
-                    break
-                case IMessage.DEBUG:
-                    log.debug message.message, message.thrown
-                    break
-            }
-        }
-    }
-}
+//import org.aspectj.bridge.IMessage
+//import org.aspectj.bridge.MessageHandler
+//import org.aspectj.tools.ajc.Main
+//
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//    }
+//    dependencies {
+//
+//        classpath 'org.aspectj:aspectjtools:1.8.1'
+////        classpath 'org.aspectj:aspectjweaver:1.8.13'
+//    }
+//}
+//
+//repositories {
+//    mavenCentral()
+//}
+//
+//android.libraryVariants.all { variant ->
+//    JavaCompile javaCompile = variant.javaCompile
+//    javaCompile.doLast {
+//        String[] args = ["-showWeaveInfo",
+//                         "-1.5",
+//                         "-inpath", javaCompile.destinationDir.toString(),
+//                         "-aspectpath", javaCompile.classpath.asPath,
+//                         "-d", javaCompile.destinationDir.toString(),
+//                         "-classpath", javaCompile.classpath.asPath,
+//                         "-bootclasspath", android.bootClasspath.join(
+//                File.pathSeparator)]
+//
+//        MessageHandler handler = new MessageHandler(true)
+//        new Main().run(args, handler)
+//
+//        def log = project.logger
+//        for (IMessage message : handler.getMessages(null, true)) {
+//            switch (message.getKind()) {
+//                case IMessage.ABORT:
+//                case IMessage.ERROR:
+//                case IMessage.FAIL:
+//                    log.error message.message, message.thrown
+//                    break
+//                case IMessage.WARNING:
+//                case IMessage.INFO:
+//                    log.info message.message, message.thrown
+//                    break
+//                case IMessage.DEBUG:
+//                    log.debug message.message, message.thrown
+//                    break
+//            }
+//        }
+//    }
+//}
